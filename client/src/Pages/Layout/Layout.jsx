@@ -1,13 +1,26 @@
 import { Outlet, Link } from "react-router-dom";
+import {useAtom} from "jotai"
+import state from '../Atom'
 
 import "./Layout.css";
 
-const Layout = () => (
+const Layout = () => {
+
+  const [filter, setFilter] = useAtom(state.filter);
+
+  const handleInput = (event) => {
+    setFilter(event.target.value);
+  }
+
+return(
   <div className="Layout">
     <nav>
       <ul>
         <li className="grow">
           <Link to="/">Employees</Link>
+        </li>
+        <li>
+        <input onInput={handleInput}></input>
         </li>
         <li>
           <Link to="/create">
@@ -18,6 +31,7 @@ const Layout = () => (
     </nav>
     <Outlet />
   </div>
-);
+)
+};
 
 export default Layout;

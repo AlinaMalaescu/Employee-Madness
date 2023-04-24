@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import "./EmployeeTable.css";
+import {useAtom} from "jotai";
+import React, {useState} from "react"
+import state from '../../Pages/Atom'
 
-const EmployeeTable = ({ employees, onDelete }) => (
+const EmployeeTable = ({ employees, onDelete }) => {
+
+  const [filter, setFilter] = useAtom(state.filter);
+
+  return (
   <div className="EmployeeTable">
     <table>
       <thead>
@@ -13,7 +20,7 @@ const EmployeeTable = ({ employees, onDelete }) => (
         </tr>
       </thead>
       <tbody>
-        {employees.map((employee) => (
+      {employees.filter((employee) =>(!filter || employee.level.includes(filter) || employee.position.includes(filter))).map((employee) => (
           <tr key={employee._id}>
             <td>{employee.name}</td>
             <td>{employee.level}</td>
@@ -27,10 +34,12 @@ const EmployeeTable = ({ employees, onDelete }) => (
               </button>
             </td>
           </tr>
-        ))}
+        ))
+        }
       </tbody>
     </table>
   </div>
-);
+  )
+};
 
 export default EmployeeTable;
