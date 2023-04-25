@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import {useAtom} from "jotai"
+import state from "./Atom"
 import Loading from "../Components/Loading";
 import EmployeeTable from "../Components/EmployeeTable";
 
@@ -14,7 +16,7 @@ const deleteEmployee = (id) => {
 
 const EmployeeList = () => {
   const [loading, setLoading] = useState(true);
-  const [employees, setEmployees] = useState(null);
+  const [employees, setEmployees] = useAtom(state.employees);
 
   const handleDelete = (id) => {
     deleteEmployee(id);
