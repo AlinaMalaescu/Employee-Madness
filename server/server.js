@@ -20,8 +20,30 @@ app.get("/api/employees/", async (req, res) => {
 });
 
 app.get("/api/employees/:id", async (req, res) => {
+  // console.log(req.params.id)
   const employee = await EmployeeModel.findById(req.params.id);
+  // console.log(employee);
   return res.json(employee);
+});
+
+app.get("/api/employees/new/:search", async (req, res) => {
+  const search = req.params.search;
+  let query;
+  
+  if (mongoose.isValidObjectId(search)) {
+    query = EmployeeModel.findById(search);
+  } else {
+    const searchRegex = new RegExp(search, "i");
+    query = EmployeeModel.find({ name: searchRegex });
+  }
+
+  try {
+    const result = await query.exec();
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 app.post("/api/employees/", async (req, res, next) => {
@@ -52,6 +74,50 @@ app.delete("/api/employees/:id", async (req, res, next) => {
   try {
     const employee = await EmployeeModel.findById(req.params.id);
     const deleted = await employee.delete();
+    return res.json(deleted);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+app.get("/api/equipment/", async (req, res) => {
+  const equipment = await EquipmentModel.find().sort({ created: "desc" });
+  return res.json(equipment);
+});
+
+app.get("/api/equipment/:id", async (req, res) => {
+  const equipment = await EquipmentModel.findById(req.params.id);
+  return res.json(equipment);
+});
+
+app.post("/api/equipment/", async (req, res, next) => {
+  const equipment = req.body;
+
+  try {
+    const saved = await EquipmentModel.create(equipment);
+    return res.json(saved);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+app.patch("/api/equipment/:id", async (req, res, next) => {
+  try {
+    const equipment = await EquipmentModel.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: { ...req.body } },
+      { new: true }
+    );
+    return res.json(equipment);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+app.delete("/api/equipment/:id", async (req, res, next) => {
+  try {
+    const equipment = await EquipmentModel.findById(req.params.id);
+    const deleted = await equipment.delete();
     return res.json(deleted);
   } catch (err) {
     return next(err);

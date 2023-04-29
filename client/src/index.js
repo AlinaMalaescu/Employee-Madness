@@ -4,12 +4,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 
 import Layout from "./Pages/Layout";
+import LayoutEquipment from "./Pages/Layout/LayoutEquipment";
 import ErrorPage from "./Pages/ErrorPage";
 import EmployeeList from "./Pages/EmployeeList";
 import EmployeeCreator from "./Pages/EmployeeCreator";
 import EmployeeUpdater from "./Pages/EmployeeUpdater";
+import EmployeeSearch from "./Pages/EmployeeSearch"
 
-import EquipmentList from "./Pages/Equipment";
+import Equipment from "./Pages/Equipment";
+import EquipmentCreator from "./Pages/EquipmentCreator"
+import EquipmentUpdater from "./Pages/EquipmentUpdater"
 
 import "./index.css";
 import TableTest from "./Pages/TableTest";
@@ -42,11 +46,30 @@ const router = createBrowserRouter([
         element: <FormTest />,
       },
       {
+        path: "/employees/:search",
+        element: <EmployeeSearch />,
+      }
+     ]
+    },
+  {
+    path: "/equipment",
+    element: <LayoutEquipment />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
         path: "/equipment",
-        element: <EquipmentList />,
+        element: <Equipment />,
       },
-    ],
-  },
+      {
+        path: "equipment/equipmentCreate",
+        element: <EquipmentCreator />,
+      },
+      {
+        path: "equipment/equipmentUpdate/:id",
+        element: <EquipmentUpdater />,
+      }
+    ]
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

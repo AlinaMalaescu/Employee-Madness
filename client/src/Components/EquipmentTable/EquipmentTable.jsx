@@ -5,26 +5,25 @@ import React, {useState, useEffect} from "react"
 
 const EquipmentTable = ({ equipment, onDelete }) => {
 
-
   return (
   <div className="EquipmentTable">
     <table>
       <thead>
         <tr>
           <th>Name</th>
-          <th>Functionality</th>
-          <th>Quantity</th>
+          <th>Type</th>
+          <th>Amount</th>
           <th />
         </tr>
       </thead>
       <tbody>
-      {equipment.map((employee) => (
-          <tr key={employee._id}>
-            <td>{employee.name}</td>
-            <td>{employee.level}</td>
-            <td>{employee.position}</td>
+      {equipment.map((equipment) => (
+          <tr key={equipment._id}>
+            <td>{equipment.name}</td>
+            <td>{equipment.type}</td>
+            <td>{equipment.amount}</td>
             <td>
-              <Link to={`/update/${equipment._id}`}>
+              <Link to={`equipment/equipmentUpdate/${equipment._id}`}>
                 <button type="button">Update</button>
               </Link>
               <button type="button" onClick={() => onDelete(equipment._id)}>

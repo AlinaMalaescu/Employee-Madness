@@ -29,6 +29,7 @@ const EquipmentList = () => {
   useEffect(() => {
     fetchEquipment()
       .then((equipment) => {
+        console.log(equipment)
         setLoading(false);
         setEquipment(equipment);
       })

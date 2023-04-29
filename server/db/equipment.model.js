@@ -4,8 +4,8 @@ const { Schema } = mongoose;
 
 const EquipmentSchema = new Schema({
   name: String,
-  functionality: String,
-  quantity: Number,
+  type: String,
+  amount: Number,
   created: {
     type: Date,
     default: Date.now,
