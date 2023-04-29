@@ -29,6 +29,7 @@ const populateEmployees = async () => {
     name,
     level: pick(levels),
     position: pick(positions),
+    present : false,
   }));
 
   await EmployeeModel.create(...employees);
@@ -36,7 +37,6 @@ const populateEmployees = async () => {
 };
 
 const populateEquipment = async () => {
-  console.log(types, amount);
   await EquipmentModel.deleteMany({});
 
   const equipment = equipNames.map((name) => ({

@@ -8,6 +8,21 @@ const EmployeeTable = ({ employees, onDelete }) => {
 
   const [filter, setFilter] = useAtom(state.filter);
   const [counter, setCounter] = useState(0);
+  const [nameSelector, setNameSelector] = useState(false);
+
+  const updateEmployee = (employee) => {
+    return fetch(`/api/employees/${employee._id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(employee),
+    }).then((res) => res.json());
+  };
+  
+  const fetchEmployee = (id) => {
+    return fetch(`/api/employees/${id}`).then((res) => res.json());
+  };
 
   const handleSortByFirstName = () => {
     employees.sort((a, b) => a.name.localeCompare(b.name));
@@ -36,6 +51,21 @@ const EmployeeTable = ({ employees, onDelete }) => {
     employees.sort((a, b) => a.level.localeCompare(b.level));
     setCounter(counter+1);
   }
+
+  const handleNameColumnSort = () => {
+    nameSelector? employees.sort((a, b) => a.name.localeCompare(b.name)) && setNameSelector(false) : 
+      employees.sort((a,b) => b.name.localeCompare(a.name)) && setNameSelector(true)
+  }
+
+  const handleCheckbox = async (event) => {
+   
+  const employeeToUpdate = await fetchEmployee(event.target.parentElement.id).then((employee) => employee);
+
+  employeeToUpdate.present? employeeToUpdate.present = false : employeeToUpdate.present = true;
+
+  updateEmployee(employeeToUpdate);
+
+  }
  
   return (
   <div className="EmployeeTable">
@@ -47,9 +77,10 @@ const EmployeeTable = ({ employees, onDelete }) => {
     <table>
       <thead>
         <tr>
-          <th>Name</th>
+          <th><button onClick ={handleNameColumnSort}>Name</button></th>
           <th>Level</th>
           <th>Position</th>
+          <th>Present</th>
           <th />
         </tr>
       </thead>
@@ -59,7 +90,9 @@ const EmployeeTable = ({ employees, onDelete }) => {
             <td>{employee.name}</td>
             <td>{employee.level}</td>
             <td>{employee.position}</td>
-            <td>
+            <td id={employee._id}><input onChange={handleCheckbox} type="checkbox" defaultChecked = {employee.present? true :false}></input></td>
+  
+            <td> 
               <Link to={`/update/${employee._id}`}>
                 <button type="button">Update</button>
               </Link>

@@ -14,6 +14,25 @@ const deleteEmployee = (id) => {
   );
 };
 
+// const updateAll = () => {
+//   const updates = { present: false };
+
+// fetch('/api/employees/updates', {
+//   method: 'PATCH',
+//   headers: {
+//     'Content-Type': 'application/json'
+//   },
+//   body: JSON.stringify(updates)
+// })
+//   .then(response => response.json())
+//   .then(result => {
+//     console.log(result);
+//   })
+//   .catch(error => {
+//     console.error(error);
+//   });
+// }
+
 const EmployeeList = () => {
   const [loading, setLoading] = useState(true);
   const [employees, setEmployees] = useAtom(state.employees);
@@ -27,6 +46,7 @@ const EmployeeList = () => {
   };
 
   useEffect(() => {
+    // updateAll();
     fetchEmployees()
       .then((employees) => {
         setLoading(false);
@@ -39,7 +59,7 @@ const EmployeeList = () => {
   }
 
   return (
-  <EmployeeTable employees={employees} onDelete={handleDelete} />
+    <EmployeeTable employees={employees} onDelete={handleDelete} />
   )
 };
 

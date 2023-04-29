@@ -70,6 +70,28 @@ app.patch("/api/employees/:id", async (req, res, next) => {
   }
 });
 
+app.patch('/api/employees/updates', async (req, res, next) => {
+
+  const updates = req.body;
+  console.log(updates)
+  let query;
+  
+  if (mongoose.isValidObjectId(updates)) {
+    query = EmployeeModel.findById(updates);
+  } else {
+    query = EmployeeModel.updateMany({}, { $set: updates })
+  }
+
+  try {
+    const result = await query.exec();
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+
+});
+
 app.delete("/api/employees/:id", async (req, res, next) => {
   try {
     const employee = await EmployeeModel.findById(req.params.id);
@@ -113,6 +135,7 @@ app.patch("/api/equipment/:id", async (req, res, next) => {
     return next(err);
   }
 });
+
 
 app.delete("/api/equipment/:id", async (req, res, next) => {
   try {
