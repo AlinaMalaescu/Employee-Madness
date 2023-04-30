@@ -136,6 +136,19 @@ app.patch("/api/equipment/:id", async (req, res, next) => {
   }
 });
 
+app.patch("/api/equipment/:search", async (req, res, next) => {
+  try {
+    const equipment = await EquipmentModel.findOneAndUpdate(
+      { name: req.params.id },
+      { $set: { ...req.body } },
+      { new: true }
+    );
+    return res.json(equipment);
+  } catch (err) {
+    return next(err);
+  }
+});
+
 
 app.delete("/api/equipment/:id", async (req, res, next) => {
   try {

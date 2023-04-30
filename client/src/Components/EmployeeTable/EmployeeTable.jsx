@@ -80,6 +80,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
           <th><button onClick ={handleNameColumnSort}>Name</button></th>
           <th>Level</th>
           <th>Position</th>
+          <th>Equipment</th>
           <th>Present</th>
           <th />
         </tr>
@@ -90,8 +91,8 @@ const EmployeeTable = ({ employees, onDelete }) => {
             <td>{employee.name}</td>
             <td>{employee.level}</td>
             <td>{employee.position}</td>
+            <td>{employee.equipment}</td>
             <td id={employee._id}><input onChange={handleCheckbox} type="checkbox" defaultChecked = {employee.present? true :false}></input></td>
-  
             <td> 
               <Link to={`/update/${employee._id}`}>
                 <button type="button">Update</button>

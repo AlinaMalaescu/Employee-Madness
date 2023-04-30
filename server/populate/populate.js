@@ -29,6 +29,7 @@ const populateEmployees = async () => {
     name,
     level: pick(levels),
     position: pick(positions),
+    equipment: [],
     present : false,
   }));
 
@@ -52,9 +53,9 @@ const populateEquipment = async () => {
 const main = async () => {
   await mongoose.connect(mongoUrl);
 
-  await populateEmployees();
-
   await populateEquipment();
+
+  await populateEmployees();
 
   await mongoose.disconnect();
 };

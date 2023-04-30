@@ -1,4 +1,21 @@
-const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
+const EmployeeForm = ({ onSave, disabled, employee, equipment, onCancel }) => {
+
+const updateEquipment = (equipmentList, name) => {
+
+  const equipmentToUpdate =  equipmentList.filter(equipment => equipment.name === name)[0];
+  console.log(equipmentToUpdate);
+  equipmentToUpdate.amount--;
+
+    return fetch(`/api/equipment/${equipmentToUpdate._id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(equipmentToUpdate),
+    }).then((res) => res.json());
+  };
+
+
   const onSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -10,6 +27,7 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
       return acc;
     }, {});
 
+    updateEquipment(equipment, employee.equipment);
     return onSave(employee);
   };
 
@@ -45,6 +63,18 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
           id="position"
         />
       </div>
+
+      {equipment && <div className="control">
+        <label htmlFor="position">Equipment:</label>
+        <select type="dropdown"
+          name="equipment"
+          id="equipment">
+            <option></option>
+            {equipment.map(equipment => (equipment.amount > 0?
+              <option key={equipment.name}>{equipment.name}</option> : null
+            ))}
+          </select>
+      </div>}
 
       <div className="buttons">
         <button type="submit" disabled={disabled}>

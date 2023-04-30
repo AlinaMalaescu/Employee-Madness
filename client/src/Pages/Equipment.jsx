@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-// import {useAtom} from "jotai"
-// import state from "./Atom"
 import Loading from "../Components/Loading";
 import EquipmentTable from "../Components/EquipmentTable/EquipmentTable";
 
