@@ -1,9 +1,13 @@
 const EmployeeForm = ({ onSave, disabled, employee, equipment, onCancel }) => {
 
 const updateEquipment = (equipmentList, name) => {
+  // console.log(employee.equipment);
 
   const equipmentToUpdate =  equipmentList.filter(equipment => equipment.name === name)[0];
-  console.log(equipmentToUpdate);
+
+  if (employee.equipment[0] === equipmentToUpdate.name) return;  //the case where the equipment is not modified
+  
+  employee.equipment[0] !== equipmentToUpdate.name ? console.log('yes') : console.log('no')
   equipmentToUpdate.amount--;
 
     return fetch(`/api/equipment/${equipmentToUpdate._id}`, {
@@ -18,17 +22,22 @@ const updateEquipment = (equipmentList, name) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    // console.log(equipment);
+    // console.log(employee);
     const formData = new FormData(e.target);
     const entries = [...formData.entries()];
 
-    const employee = entries.reduce((acc, entry) => {
+    const formEmployee = entries.reduce((acc, entry) => {
       const [k, v] = entry;
       acc[k] = v;
       return acc;
     }, {});
 
-    updateEquipment(equipment, employee.equipment);
-    return onSave(employee);
+    // const equipmentToUpdate =  equipment.filter(equip => equip.name === formEmployee.equipment)[0];
+    // employee.equipment[0] &&  employee.equipment[0] !== equipmentToUpdate[0].name? (employee.equipment[0].amount ++) && updateEquipment()
+
+    formEmployee.equipment? updateEquipment(formEmployee.equipment) : formEmployee.equipment = []
+    return onSave(formEmployee);
   };
 
   return (

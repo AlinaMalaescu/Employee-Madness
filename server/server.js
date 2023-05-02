@@ -19,31 +19,22 @@ app.get("/api/employees/", async (req, res) => {
   return res.json(employees);
 });
 
-app.get("/api/employees/:id", async (req, res) => {
-  // console.log(req.params.id)
-  const employee = await EmployeeModel.findById(req.params.id);
-  // console.log(employee);
-  return res.json(employee);
-});
-
 app.get("/api/employees/new/:search", async (req, res) => {
   const search = req.params.search;
-  let query;
-  
-  if (mongoose.isValidObjectId(search)) {
-    query = EmployeeModel.findById(search);
-  } else {
-    const searchRegex = new RegExp(search, "i");
-    query = EmployeeModel.find({ name: searchRegex });
-  }
 
   try {
-    const result = await query.exec();
-    res.json(result);
+    const searchRegex = new RegExp(search, "i");
+    const result = await EmployeeModel.find({name: searchRegex});  
+    return res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
+});
+
+app.get("/api/employees/:id", async (req, res) => {
+  const employee = await EmployeeModel.findById(req.params.id);
+  return res.json(employee);
 });
 
 app.post("/api/employees/", async (req, res, next) => {
@@ -68,28 +59,6 @@ app.patch("/api/employees/:id", async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
-});
-
-app.patch('/api/employees/updates', async (req, res, next) => {
-
-  const updates = req.body;
-  console.log(updates)
-  let query;
-  
-  if (mongoose.isValidObjectId(updates)) {
-    query = EmployeeModel.findById(updates);
-  } else {
-    query = EmployeeModel.updateMany({}, { $set: updates })
-  }
-
-  try {
-    const result = await query.exec();
-    res.json(result);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-
 });
 
 app.delete("/api/employees/:id", async (req, res, next) => {
