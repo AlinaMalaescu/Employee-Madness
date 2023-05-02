@@ -1,14 +1,6 @@
 const EmployeeForm = ({ onSave, disabled, employee, equipment, onCancel }) => {
 
-const updateEquipment = (equipmentList, name) => {
-  // console.log(employee.equipment);
-
-  const equipmentToUpdate =  equipmentList.filter(equipment => equipment.name === name)[0];
-
-  if (employee.equipment[0] === equipmentToUpdate.name) return;  //the case where the equipment is not modified
-  
-  employee.equipment[0] !== equipmentToUpdate.name ? console.log('yes') : console.log('no')
-  equipmentToUpdate.amount--;
+const updateEquipment = (equipmentToUpdate) => {
 
     return fetch(`/api/equipment/${equipmentToUpdate._id}`, {
       method: "PATCH",
@@ -22,8 +14,7 @@ const updateEquipment = (equipmentList, name) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // console.log(equipment);
-    // console.log(employee);
+    
     const formData = new FormData(e.target);
     const entries = [...formData.entries()];
 
@@ -33,10 +24,14 @@ const updateEquipment = (equipmentList, name) => {
       return acc;
     }, {});
 
-    // const equipmentToUpdate =  equipment.filter(equip => equip.name === formEmployee.equipment)[0];
-    // employee.equipment[0] &&  employee.equipment[0] !== equipmentToUpdate[0].name? (employee.equipment[0].amount ++) && updateEquipment()
+    const initialEquipment =  equipment.filter(equip => equip.name === employee.equipment[0])[0];
+    const equipmentToUpdate = equipment.filter(equip => equip.name === formEmployee.equipment)[0];
+    equipmentToUpdate.amount --;
+ 
+    if (initialEquipment) initialEquipment.amount++ && updateEquipment(initialEquipment)
+    
+    formEmployee.equipment && equipmentToUpdate.name !== initialEquipment.name? updateEquipment(equipmentToUpdate) : formEmployee.equipment = []
 
-    formEmployee.equipment? updateEquipment(formEmployee.equipment) : formEmployee.equipment = []
     return onSave(formEmployee);
   };
 
