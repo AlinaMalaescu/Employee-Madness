@@ -69,17 +69,17 @@ const updateEquipment = (equipmentToUpdate) => {
         />
       </div>
 
-      {/* <div className="control">
+       <div className="control">
         <label htmlFor="name">Brands:</label>
         <select type="dropdown"
           name="brand"
           id="brand">
             <option></option>
-            {employees.map (employee => 
-              <option key={employee.brand.name}>{employee.brand.name}</option>
-            )}
+            <option>Acer</option>
+            <option>HP</option>
+            <option>Razer</option>
           </select>
-      </div> */}
+      </div> 
 
       {equipment && <div className="control">
         <label htmlFor="position">Equipment:</label>
