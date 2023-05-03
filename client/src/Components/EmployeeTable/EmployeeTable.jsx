@@ -92,7 +92,7 @@ const EmployeeTable = ({ employees, pages, setPage, onDelete }) => {
             <td>{employee.level}</td>
             <td>{employee.position}</td>
             <td>{employee.equipment}</td>
-            <td>{employee.favoriteBrand.name}</td>
+            <td>{employee.favoriteBrand? employee.favoriteBrand.name : "N/A"}</td> 
             <td id={employee._id}><input onChange={handleCheckbox} type="checkbox" defaultChecked = {employee.present? true :false}></input></td>
             <td> 
               <Link to={`/update/${employee._id}`}>
