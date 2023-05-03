@@ -22,6 +22,8 @@ const fetchEquipment = () => {
   return fetch("/api/equipment").then((res) => res.json());
 };
 
+
+
 const EmployeeUpdater = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -42,7 +44,8 @@ const EmployeeUpdater = () => {
 
   useEffect(() => {
     fetchEquipment()
-    .then(equipment => setEquipment(equipment));
+    .then(equipment => {
+      setEquipment(equipment)});
   })
 
   const handleUpdateEmployee = (employee) => {

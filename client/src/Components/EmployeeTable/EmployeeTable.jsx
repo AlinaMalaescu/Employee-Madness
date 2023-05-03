@@ -4,7 +4,7 @@ import {useAtom} from "jotai";
 import React, {useState, useEffect} from "react"
 import state from '../../Pages/Atom'
 
-const EmployeeTable = ({ employees, onDelete }) => {
+const EmployeeTable = ({ employees, pages, setPage, onDelete }) => {
 
   const [filter, setFilter] = useAtom(state.filter);
   const [counter, setCounter] = useState(0);
@@ -81,8 +81,8 @@ const EmployeeTable = ({ employees, onDelete }) => {
           <th>Level</th>
           <th>Position</th>
           <th>Equipment</th>
+          <th>Favorite brand</th>
           <th>Present</th>
-          <th />
         </tr>
       </thead>
       <tbody>
@@ -92,6 +92,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
             <td>{employee.level}</td>
             <td>{employee.position}</td>
             <td>{employee.equipment}</td>
+            <td>{employee.favoriteBrand.name}</td>
             <td id={employee._id}><input onChange={handleCheckbox} type="checkbox" defaultChecked = {employee.present? true :false}></input></td>
             <td> 
               <Link to={`/update/${employee._id}`}>

@@ -1,5 +1,6 @@
 // https://mongoosejs.com/
 const mongoose = require("mongoose");
+const Brand = require('./favoriteBrand.model');
 
 const { Schema } = mongoose;
 
@@ -9,6 +10,10 @@ const EmployeeSchema = new Schema({
   position: String,
   present: Boolean,
   equipment: Array,
+  favoriteBrand: {
+    type: Schema.Types.ObjectId,
+    ref: 'Brand',
+  },
   created: {
     type: Date,
     default: Date.now,
@@ -16,3 +21,4 @@ const EmployeeSchema = new Schema({
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
+

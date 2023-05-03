@@ -24,13 +24,14 @@ const updateEquipment = (equipmentToUpdate) => {
       return acc;
     }, {});
 
-    const initialEquipment =  equipment.filter(equip => equip.name === employee.equipment[0])[0];
-    const equipmentToUpdate = equipment.filter(equip => equip.name === formEmployee.equipment)[0];
-    equipmentToUpdate.amount --;
- 
-    if (initialEquipment) initialEquipment.amount++ && updateEquipment(initialEquipment)
+  //logic for updating the database
+    // const initialEquipment =  equipment.filter(equip => equip.name === employee.equipment[0])[0];
+    // const equipmentToUpdate = equipment.filter(equip => equip.name === formEmployee.equipment)[0];
+
+    // !initialEquipment && formEmployee.equipment ? equipmentToUpdate.amount -- && updateEquipment(equipmentToUpdate) : formEmployee.equipment = [];
+
+    // initialEquipment && formEmployee.equipment && equipmentToUpdate.name !== initialEquipment.name?   equipmentToUpdate.amount -- && updateEquipment(equipmentToUpdate) : formEmployee.equipment = [];
     
-    formEmployee.equipment && equipmentToUpdate.name !== initialEquipment.name? updateEquipment(equipmentToUpdate) : formEmployee.equipment = []
 
     return onSave(formEmployee);
   };
@@ -67,6 +68,18 @@ const updateEquipment = (equipmentToUpdate) => {
           id="position"
         />
       </div>
+
+      {/* <div className="control">
+        <label htmlFor="name">Brands:</label>
+        <select type="dropdown"
+          name="brand"
+          id="brand">
+            <option></option>
+            {employees.map (employee => 
+              <option key={employee.brand.name}>{employee.brand.name}</option>
+            )}
+          </select>
+      </div> */}
 
       {equipment && <div className="control">
         <label htmlFor="position">Equipment:</label>
