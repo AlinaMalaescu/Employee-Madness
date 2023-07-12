@@ -10,6 +10,7 @@ const EmployeeSchema = new Schema({
   position: String,
   present: Boolean,
   equipment: Array,
+  height: Number,
   favoriteBrand: {
     type: Schema.Types.ObjectId,
     ref: 'Brand',

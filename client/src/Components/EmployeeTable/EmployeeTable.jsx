@@ -66,6 +66,21 @@ const EmployeeTable = ({ employees, pages, setPage, onDelete }) => {
   updateEmployee(employeeToUpdate);
 
   }
+
+  const handleRandomizeHeight = (employees) => {
+     employees.map(employee => {
+      employee.height = Math.floor(Math.random() * (190-140)+1) +140;
+      updateEmployee(employee);
+      setCounter(counter+1);
+    })
+  }
+
+  const handleInput = (e) => {
+
+    const array1 = employees.filter(employee => employee.height > e.target.value);
+    employees.splice(0, employees.length, ...array1);
+    setCounter(counter+1);
+  }
  
   return (
   <div className="EmployeeTable">
@@ -74,6 +89,8 @@ const EmployeeTable = ({ employees, pages, setPage, onDelete }) => {
       <button onClick={handleSortByMiddleName}>Sort by Middle Name</button>
       <button onClick={handleSortByPosition}>Sort by Position</button>
       <button onClick={handleSortByLevel}>Sort by Level</button>
+      <button onClick={()=>{handleRandomizeHeight(employees)}}>Randomize height</button>
+      <input onInput={handleInput}></input>
     <table>
       <thead>
         <tr>
@@ -81,6 +98,7 @@ const EmployeeTable = ({ employees, pages, setPage, onDelete }) => {
           <th>Level</th>
           <th>Position</th>
           <th>Equipment</th>
+          <th>Height</th>
           <th>Favorite brand</th>
           <th>Present</th>
         </tr>
@@ -92,6 +110,7 @@ const EmployeeTable = ({ employees, pages, setPage, onDelete }) => {
             <td>{employee.level}</td>
             <td>{employee.position}</td>
             <td>{employee.equipment}</td>
+            <td>{employee.height}</td>
             <td>{employee.favoriteBrand? employee.favoriteBrand.name : "N/A"}</td> 
             <td id={employee._id}><input onChange={handleCheckbox} type="checkbox" defaultChecked = {employee.present? true :false}></input></td>
             <td> 
